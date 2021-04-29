@@ -113,7 +113,7 @@ if(checkPermission())
     private fun findFiles(file: File): ArrayList<File>
      {
         val arrayList: ArrayList<File> = ArrayList()
-        val listFiles: Array<File> = file.listFiles()
+        val listFiles: Array<out File>? = file.listFiles()
          if(listFiles!= null)
         for(i in listFiles)
         {
@@ -141,11 +141,11 @@ if(checkPermission())
     override fun onFileClick(file: File) {
         if(file.isDirectory)
         {
-            val bundle:Bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString("path",file.absolutePath)
             val externalFragment = ExternalFragment()
             externalFragment.arguments= bundle
-            fragmentManager!!.beginTransaction().replace(R.id.frame,externalFragment).addToBackStack(null).commit()
+            fragmentManager!!.beginTransaction().replace(R.id.frame,externalFragment).addToBackStack("MainActivity").commit()
         }
         else if(file.isFile)
         {
